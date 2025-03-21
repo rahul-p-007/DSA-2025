@@ -18,11 +18,14 @@ public:
                 high--;
             }
         }
-        vector<int> ans;
-        for (int i = low; i <= high; i++)
-        {
-            ans.push_back(arr[i]);
-        }
-        return ans;
+        // vector<int> ans;
+        // for (int i = low; i <= high; i++)
+        // {
+        //     ans.push_back(arr[i]);
+        // }
+        // return ans;
+
+        // we can also use stl method;
+        return vector<int>(arr.begin() + low, arr.begin() + high + 1);
     }
 };
