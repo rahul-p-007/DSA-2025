@@ -1,0 +1,143 @@
+# ⏰ Minimum Time Difference - C++ Solution
+
+## ✅ Problem Statement
+
+Given a list of 24-hour clock time points in `HH:MM` format, return the minimum minutes difference between any two time points.
+
+---
+
+## 🗞 Example
+
+```cpp
+Input: timePoints = ["23:59", "00:00"]
+Output: 1
+Explanation: The minimum difference is 1 minute.
+```
+
+---
+
+## 🧹 Algorithm & Detailed Approach
+
+### 🔧 Step-by-step Explanation
+
+We want to find the **minimum difference** in minutes between any two times in a list of strings formatted as `HH:MM`.
+
+### 1. **Convert Time Strings to Total Minutes**
+
+- Each string is in the format `HH:MM`. We can split it into hours and minutes.
+- Convert each time to **total minutes since 00:00**:
+  - `total_minutes = hours * 60 + minutes`
+- Example: "23:59" becomes `23 * 60 + 59 = 1439`
+- Store these converted values in a `vector<int>` called `minutes`.
+
+### 2. **Sort the Times**
+
+- Sort the `minutes` vector in **ascending order**.
+- This allows us to efficiently calculate differences between **consecutive times**.
+
+### 3. **Find Minimum Difference Between Consecutive Times**
+
+- Initialize `mini = INT_MAX`
+- Iterate through sorted times:
+  ```cpp
+  for (int i = 0; i < minutes.size() - 1; i++) {
+      int diff = minutes[i + 1] - minutes[i];
+      mini = min(mini, diff);
+  }
+  ```
+- This checks how close two adjacent times are.
+
+### 4. **Handle Circular Difference (Overnight Edge Case)**
+
+- Example: Difference between `23:59` and `00:00` is `1` minute, not `1439`.
+- Calculate:
+  ```cpp
+  int lastDiff = (minutes[0] + 1440) - minutes.back();
+  mini = min(mini, lastDiff);
+  ```
+- This ensures we wrap around the clock correctly.
+
+### 5. **Return Final Minimum Difference**
+
+- After checking all consecutive pairs and the circular difference, return `mini`.
+
+---
+
+## 💡 Why This Works
+
+- Time strings are **uniform** and can be easily converted.
+- Sorting ensures we only compare each time with its next neighbor.
+- Circular difference is crucial for wrapping around midnight.
+
+---
+
+## 📊 Time & Space Complexity
+
+- **Time Complexity**: `O(n log n)`
+  - Converting each time: `O(n)`
+  - Sorting: `O(n log n)`
+- **Space Complexity**: `O(n)`
+  - To store time points in minutes.
+
+---
+
+## 💻 C++ Code
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int MinimumDifference(vector<string> timePoints) {
+    vector<int> minutes;
+
+    for (const string &currTime : timePoints) {
+        int hour = stoi(currTime.substr(0, 2));
+        int min = stoi(currTime.substr(3, 2));
+        int totalminutes = hour * 60 + min;
+        minutes.push_back(totalminutes);
+    }
+
+    sort(minutes.begin(), minutes.end());
+
+    int mini = INT_MAX;
+    for (int i = 0; i < minutes.size() - 1; i++) {
+        int diff = minutes[i + 1] - minutes[i];
+        mini = min(mini, diff);
+    }
+
+    int lastDiff = (minutes[0] + 1440) - minutes.back();
+    mini = min(mini, lastDiff);
+
+    return mini;
+}
+```
+
+---
+
+## 🧲 Sample Test Cases
+
+```cpp
+int main() {
+    vector<string> t1 = {"23:59", "00:00"};
+    cout << MinimumDifference(t1) << endl;  // Output: 1
+
+    vector<string> t2 = {"01:01", "02:01", "03:00"};
+    cout << MinimumDifference(t2) << endl;  // Output: 59
+
+    vector<string> t3 = {"00:00", "23:55", "00:05"};
+    cout << MinimumDifference(t3) << endl;  // Output: 5
+
+    vector<string> t4 = {"05:31", "22:08", "00:35"};
+    cout << MinimumDifference(t4) << endl;  // Output: 87
+
+    return 0;
+}
+```
+
+---
+
+## 🔗 Related Problems
+
+- Daily Temperatures
+- Meeting Rooms
+- Merge Intervals
