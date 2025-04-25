@@ -1,0 +1,88 @@
+## 🧠 Boyer-Moore Voting Algorithm
+
+The **Boyer-Moore Voting Algorithm** is a clever and efficient algorithm used to find a potential majority element in a collection — using **constant space and linear time**.
+
+---
+
+### 🔸 How It Works
+
+This algorithm is based on a simple voting logic:
+
+- Assume one element is the **candidate** for the majority.
+- Every time the same element appears, you increase its **vote count**.
+- If a different element appears, you **decrease the vote**.
+- When the vote count drops to zero, **change the candidate**.
+
+---
+
+### 🔸 Step-by-Step Explanation
+
+1. **Initialize**:
+
+   - `candidate = -1`
+   - `votes = 0`
+
+2. **Traverse the array**:
+
+   - If `votes == 0`, set the `candidate = current element` and `votes = 1`.
+   - Else:
+     - If `current element == candidate`, increment `votes`.
+     - Otherwise, decrement `votes`.
+
+3. **At the end**, the `candidate` holds the element that could be the majority.
+
+4. **Optional verification step**:
+   - Count how many times the candidate appears.
+   - If it appears more than `n/2` times, confirm it as majority.
+
+---
+
+### 🔄 Why It Works
+
+- The algorithm "cancels out" different elements.
+- Only a majority element (if it exists) will survive the cancellation process.
+- It ensures **O(n)** time and **O(1)** space without using a hashmap or sorting.
+
+---
+
+### 📌 When to Use This Algorithm
+
+- When you need to find a frequent or majority element.
+- You want to avoid extra space (e.g., hashmaps).
+- You can make a second pass to verify the result, if needed.
+
+---
+
+### 🧪 Example Walkthrough
+
+Assume:
+
+```cpp
+nums = [3, 3, 4, 2, 3, 3, 3]
+```
+
+**Pass 1 (Candidate selection)**:
+
+```
+Step-by-step:
+votes = 0 → candidate = 3
+votes = 1 → nums[1] = 3 → votes++
+votes = 2 → nums[2] = 4 → votes--
+votes = 1 → nums[3] = 2 → votes--
+votes = 0 → candidate = 3 again
+votes = 1 → nums[5] = 3 → votes++
+votes = 2 → nums[6] = 3 → votes++
+```
+
+Candidate is `3` with final votes `2`.
+
+**Pass 2 (Validation)**:
+Count how many times `3` appears → if > `n / 2`, it's the majority.
+
+---
+
+### ✅ Summary
+
+- Efficient and elegant.
+- No need to store counts.
+- Great for single majority-type queries in linear time.
