@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 1.
 
 ## 🧾 Approach
@@ -96,3 +97,103 @@ Output:
 - Remove All Adjacent Duplicates in String
 - Replace Substrings for Balanced String
 - String Compression
+=======
+# 1.
+
+## 🧾 Approach
+
+We use a **stack-like behavior** by leveraging a `string` as the result holder (`ans`). As we iterate through the original string:
+
+- If the current character matches the last character in `ans`, we **remove** the last character (pop).
+- Otherwise, we **add** the character to `ans`.
+
+This efficiently removes **adjacent duplicates** in a single pass.
+
+---
+
+## 🧮 Steps
+
+1. **Initialize** an empty string `ans` to simulate a stack.
+2. **Loop** through each character of the input string `s`:
+   - If `ans` is **not empty** and the **last character** of `ans` is equal to the current character:
+     - **Remove** (pop) the last character from `ans`.
+   - Else:
+     - **Append** (push) the current character to `ans`.
+3. After the loop ends, **return** the `ans` string.
+
+# 2.
+
+# 🧠 Remove All Occurrences of a Substring - C++ Solution
+
+## ✅ Problem Statement
+
+Given a string `s` and a string `part`, remove all occurrences of `part` from `s` until `part` no longer exists in `s`. Return the resulting string.
+
+---
+
+## 🧾 Example
+
+```cpp
+Input:
+s = "daabcbaabcbc"
+part = "abc"
+
+Output:
+"dab"
+```
+
+---
+
+## 🧹 Algorithm & Approach
+
+### 🛠️ Step-by-step Algorithm
+
+1. **Find the First Occurrence**:
+
+   - Use `s.find(part)` to find the first index of `part` in the string `s`.
+
+2. **Remove It**:
+
+   - If the part is found (`find` does not return `string::npos`), erase it using `s.erase(position, part.length())`.
+
+3. **Repeat Until Done**:
+
+   - Keep finding and erasing until `part` is no longer found in `s`.
+
+4. **Return Final String**:
+   - When the loop ends, return the updated string.
+
+---
+
+## 💡 Why This Works
+
+- This is a greedy approach: remove `part` as soon as it's found.
+- Every removal might create a new occurrence, so we continue until nothing is left to remove.
+
+---
+
+## �� Time & Space Complexity
+
+- **Time Complexity**:
+  - Worst-case `O(N * M)` where:
+    - `N` is the length of `s`
+    - `M` is the number of times `part` appears
+- **Space Complexity**:
+  - `O(1)` (in-place modifications)
+
+---
+
+## 🧠 Tips for Similar Problems
+
+- Look for **patterns that repeat** and can be removed in chunks.
+- Use **`string::find` and `string::erase`** for in-place modification.
+- For more complex patterns, consider using **stacks or regex**.
+
+---
+
+## 🔗 Related Problems
+
+- Remove All Adjacent Duplicates in String
+- Replace Substrings for Balanced String
+- String Compression
+>>>>>>> 3ffe28cfedf2733f8d30d5c7eedde94246a74e32

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧪 Dry Run and Detailed Explanation: Count Palindromic Substrings
 
 ## 🔁 Dry Run of the Code
@@ -133,3 +134,140 @@ public:
 - We expand around every center in the string.
 - The helper function efficiently counts palindromes for both odd and even cases.
 - This solution avoids checking all substrings explicitly, improving efficiency.
+=======
+# 🧪 Dry Run and Detailed Explanation: Count Palindromic Substrings
+
+## 🔁 Dry Run of the Code
+
+### Input:
+
+```cpp
+string s = "aaa";
+```
+
+### Step-by-step Execution:
+
+We iterate through each character in the string and consider two cases at each index:
+
+1. Odd-length palindrome: expand around a single character.
+2. Even-length palindrome: expand around a pair of characters.
+
+```cpp
+for (int i = 0; i < n; i++) {
+    count += FindAroundIndex(s, i, i);     // Odd case
+    count += FindAroundIndex(s, i, i + 1); // Even case
+}
+```
+
+### Iteration Breakdown:
+
+#### i = 0:
+
+- Odd: `FindAroundIndex(s, 0, 0)` → "a" → count = 1
+- Even: `FindAroundIndex(s, 0, 1)` → "aa" → count = 1
+
+#### i = 1:
+
+- Odd: `FindAroundIndex(s, 1, 1)` → "a", "aaa" → count = 2
+- Even: `FindAroundIndex(s, 1, 2)` → "aa" → count = 1
+
+#### i = 2:
+
+- Odd: `FindAroundIndex(s, 2, 2)` → "a" → count = 1
+- Even: `FindAroundIndex(s, 2, 3)` → out of bounds → count = 0
+
+**Total Count:** `1+1+2+1+1 = 6`
+
+---
+
+## 🧹 Algorithm & Detailed Approach
+
+### 🔧 Step-by-step Explanation
+
+We aim to count **all palindromic substrings** in a given string. A brute-force approach would consider every possible substring and check if it is a palindrome. But this can be optimized using the **center expansion** technique.
+
+### 1. **Expand Around Centers**
+
+- A palindrome mirrors around its center.
+- There are `2n - 1` possible centers in a string of length `n`:
+  - `n` single characters (odd-length palindromes)
+  - `n - 1` pairs between characters (even-length palindromes)
+
+### 2. **Define a Helper Function**
+
+- Define a helper function `FindAroundIndex(string s, int i, int j)`:
+  - Start expanding outward from indices `i` and `j`.
+  - If `s[i] == s[j]`, it's a valid palindrome.
+  - Expand `i--`, `j++` until mismatch or bounds exceeded.
+  - Count and return how many valid palindromes found.
+
+### 3. **Iterate Over All Possible Centers**
+
+- Loop through each index in the string:
+  - For odd-length: call `FindAroundIndex(s, i, i)`
+  - For even-length: call `FindAroundIndex(s, i, i + 1)`
+- Sum all valid palindrome counts.
+
+---
+
+## 💻 Code Recap
+
+```cpp
+class Solution {
+public:
+    int FindAroundIndex(string s, int i, int j) {
+        int count = 0;
+        while (i >= 0 && j < s.length() && s[i] == s[j]) {
+            count++;
+            i--;
+            j++;
+        }
+        return count;
+    }
+
+    int countSubstrings(string s) {
+        int count = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            count += FindAroundIndex(s, i, i);       // odd
+            count += FindAroundIndex(s, i, i + 1);   // even
+        }
+        return count;
+    }
+};
+```
+
+---
+
+## 🧪 More Test Cases
+
+### Input: `"abc"`
+
+- Palindromic substrings: `a`, `b`, `c`
+- Output: `3`
+
+### Input: `"racecar"`
+
+- Palindromic substrings: `r, a, c, e, cec, aceca, racecar`
+- Output: `10`
+
+### Input: `"ababa"`
+
+- Palindromic substrings: `a, b, a, b, a, aba, bab, aba, ababa`
+- Output: `9`
+
+---
+
+## 📊 Time and Space Complexity
+
+- **Time Complexity:** `O(n^2)`
+- **Space Complexity:** `O(1)` (No extra data structures)
+
+---
+
+## ✅ Summary
+
+- We expand around every center in the string.
+- The helper function efficiently counts palindromes for both odd and even cases.
+- This solution avoids checking all substrings explicitly, improving efficiency.
+>>>>>>> 3ffe28cfedf2733f8d30d5c7eedde94246a74e32
