@@ -1,0 +1,103 @@
+# 📘 Square Root Function in C++
+
+## 🔍 Function Overview
+
+This function calculates the **integer part of the square root** of a given number `Num`.  
+It uses **binary search** to efficiently find the square root without using any built-in functions.
+
+---
+
+## ✅ Function Code
+
+```cpp
+int SqaureRoot(int Num) {
+    int start = 1;
+    int end = Num;
+    int ans = -1;
+    while(start <= end) {
+        long long mid = start + (end - start) / 2;
+        long long target = mid * mid;
+        if(target <= (long long)(Num)) {
+            ans = mid;
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return ans;
+}
+🧠 Logic Explanation
+Objective: Find the greatest integer x such that x * x <= Num.
+
+Approach: Use binary search between 1 and Num.
+
+🔧 Step-by-step Breakdown
+Initialize search range:
+
+start = 1
+
+end = Num
+
+ans = -1 (to store the best candidate answer)
+
+Binary search loop:
+
+Find mid using:
+mid = start + (end - start) / 2
+
+Calculate mid * mid and compare it with Num
+
+Conditions:
+
+If mid * mid <= Num:
+→ This mid is a possible answer
+→ Store mid in ans
+→ Move right: start = mid + 1
+
+Else:
+→ mid is too large
+→ Move left: end = mid - 1
+
+Loop ends:
+
+ans contains the integer part of the square root
+
+💡 Example
+Let's take Num = 10:
+
+Iteration	start	end	mid	mid*mid	Result
+1	1	10	5	25	Too high
+2	1	4	2	4	Valid → ans=2
+3	3	4	3	9	Valid → ans=3
+4	4	4	4	16	Too high
+End					Final ans = 3
+🧪 Sample Test Cases
+
+int main() {
+    vector<int> testCases = {1, 4, 10, 15, 16, 17, 100, 2147395599};
+
+    for(int num : testCases) {
+        cout << "SqaureRoot(" << num << ") = " << SqaureRoot(num) << endl;
+    }
+
+    return 0;
+}
+
+SqaureRoot(1) = 1
+SqaureRoot(4) = 2
+SqaureRoot(10) = 3
+SqaureRoot(15) = 3
+SqaureRoot(16) = 4
+SqaureRoot(17) = 4
+SqaureRoot(100) = 10
+SqaureRoot(2147395599) = 46339
+⏱️ Time & Space Complexity
+Time Complexity: O(log N)
+
+Space Complexity: O(1)
+
+⚠️ Important Notes
+long long is used to avoid overflow when computing mid * mid.
+
+This method works well even for very large inputs.
+```

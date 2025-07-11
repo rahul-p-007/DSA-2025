@@ -1,0 +1,35 @@
+## 🧠 Two-Pointer Algorithm Explanation
+
+The algorithm works by using one pointer to iterate through the array and another pointer to track the position where the next non-zero element should be placed.
+
+---
+
+### 🔸 Step-by-Step Explanation
+
+1. **Initialize a pointer `insertPos`** to `0`.  
+   This pointer tells us the index where the next non-zero element should go.
+
+2. **Traverse the array** using a loop:
+
+   - For every element in the array:
+     - If the current element is **not zero**, we place it at index `insertPos`.
+     - Then we increment `insertPos` by `1`.
+
+3. **At this point**, all non-zero elements are shifted to the front of the array, and `insertPos` is pointing to the first position after the last non-zero element.
+
+4. **Fill the remaining positions** in the array (from `insertPos` to end) with zeroes.
+
+---
+
+### 🔸 Why It Works
+
+- **All non-zero elements** are moved to the front in their original order because we go from left to right.
+- **All zeroes** are pushed to the back by overwriting remaining elements after the non-zero shift.
+- The algorithm does not use any extra space and performs only a single pass (plus one small pass to fill zeroes).
+
+---
+
+### 🔸 Final Thoughts
+
+- This approach is clean, efficient, and avoids unnecessary swapping.
+- It ensures **O(n)** time complexity and **O(1)** space complexity.

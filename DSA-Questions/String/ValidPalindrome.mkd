@@ -1,0 +1,110 @@
+# 🔄 Valid Palindrome II - At Most One Removal
+
+## ✅ Problem Statement
+
+Given a string `s`, return `true` if the string can become a palindrome after deleting **at most one character**. Otherwise, return `false`.
+
+---
+
+## 🧾 Example
+
+```cpp
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'b'.
+```
+
+---
+
+## 🧩 Algorithm & Approach
+
+### 🛠️ Step-by-step Algorithm
+
+1. **Two Pointer Technique**:
+
+   - Initialize two pointers: `start = 0` and `end = s.length() - 1`
+
+2. **Check Characters**:
+
+   - While `start <= end`:
+     - If `s[start] == s[end]`, move both pointers inward.
+     - If `s[start] != s[end]`, check if removing either character makes the substring a palindrome.
+       - Call a helper function `CheckPalindrome(s, start + 1, end)` OR `CheckPalindrome(s, start, end - 1)`.
+
+3. **Check Substrings**:
+
+   - The helper function uses the same two-pointer technique to check if a substring is a valid palindrome.
+
+4. **Return Result**:
+   - If either possibility is a palindrome, return `true`, else `false`.
+
+---
+
+## 💡 Why This Works
+
+- A single mismatch might be resolved by removing one character.
+- After one removal, normal palindrome logic applies.
+
+---
+
+## 🧮 Time & Space Complexity
+
+- **Time Complexity**: `O(n)`
+- **Space Complexity**: `O(1)`
+
+---
+
+## 💻 C++ Code
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+bool CheckPalindrome(string s, int i, int j) {
+    while (i <= j) {
+        if (s[i] != s[j]) {
+            return false;
+        }
+        i++;
+        j--;
+    }
+    return true;
+}
+
+bool isValidPalindrome(string s) {
+    int start = 0;
+    int end = s.length() - 1;
+    while (start <= end) {
+        if (s[start] != s[end]) {
+            return CheckPalindrome(s, start + 1, end) || CheckPalindrome(s, start, end - 1);
+        }
+        start++;
+        end--;
+    }
+    return true;
+}
+```
+
+---
+
+## 🧪 Sample Test Cases
+
+```cpp
+int main() {
+    cout << isValidPalindrome("abca") << endl;      // Output: 1 (true)
+    cout << isValidPalindrome("racecar") << endl;   // Output: 1 (true)
+    cout << isValidPalindrome("abc") << endl;       // Output: 0 (false)
+    cout << isValidPalindrome("ab") << endl;        // Output: 0 (false)
+    cout << isValidPalindrome("a") << endl;         // Output: 1 (true)
+    cout << isValidPalindrome("acaa") << endl;      // Output: 1 (true)
+    return 0;
+}
+```
+
+---
+
+## 🔗 Related Problems
+
+- Valid Palindrome
+- Longest Palindromic Substring
+- Palindrome Partitioning
